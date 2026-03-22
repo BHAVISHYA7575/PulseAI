@@ -1,6 +1,6 @@
 import pandas as pd
-from preprocessing import clean_tweet
-from sentiment import analyze_sentiment
+from bert_sentiment import bert_analyze_sentiment 
+
 
 correct = 0 
 total = 0 
@@ -20,9 +20,7 @@ print(data.head())
 
 for index, row in data.iterrows():
  tweet = row['text']
-
- cleaned =   " ".join(clean_tweet(tweet))
- sentiment = analyze_sentiment(cleaned)
+ sentiment = bert_analyze_sentiment(tweet)
  
  print(f"Actual: {row['sentiment']}, Predicted: {sentiment}")
  total = total + 1 
