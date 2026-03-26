@@ -2,7 +2,9 @@ import re
 import nltk
 nltk.download('stopwords')
 from nltk.corpus  import stopwords
-stop_words = set(stopwords.words('english')) 
+stop_words = set(stopwords.words('english'))
+custom_stopwords = {"im", "u", "ur", "lol", "omg", "rt", "ha", "wa", "gonna", "wanna", "gotta"}
+stop_words.update(custom_stopwords)
 nltk.download('wordnet')
 from nltk.stem import WordNetLemmatizer
 
@@ -23,14 +25,14 @@ def clean_tweet(tweet):
  tweet = re.sub(r'@\S+', '', tweet)
 
 # REMOVING PUNCTUTUATION
- tweet = re.sub(r'[^a-zA-Z0-9\s]', '', tweet)
+ tweet = re.sub(r'[^a-zA-Z\s]', '', tweet)
 
 #REMOVING STOPWORDS 
  tweet = tweet.split()
  clean_line = [] 
  for word in tweet: 
-  word = lemmatizer.lemmatize(word)
   if word not in stop_words: 
+   word = lemmatizer.lemmatize(word)
    clean_line.append(word) 
 
  return clean_line 

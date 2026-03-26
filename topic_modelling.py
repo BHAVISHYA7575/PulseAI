@@ -1,3 +1,7 @@
+#IMPORTS
+from gensim.corpora import Dictionary
+from gensim.models import LdaModel
+
 # TOPIC MODELLING 
 ''' Topic modelling is a technique used in NLP to discover hidden topics in documents.'''
 
@@ -21,7 +25,19 @@ cleaned_tweet = data['text'].apply(clean_tweet) # on the text data we are applyi
   now we see 1000 tweets clean and can be used for further transformation '''
 print(cleaned_tweet)
 
+#BUILDING DICTIONARY 
+dictionary = Dictionary(cleaned_tweet)
+print(f"Dictionary size: {len(dictionary)}")
 
+#CORPUS 
+corpus = [dictionary.doc2bow(tweet) for tweet in cleaned_tweet]
+print (corpus[0])
+print(dictionary[0])
 
+#IMPLEMENTING LDA MODEL 
+lda_model = LdaModel(corpus=corpus, num_topics=5, id2word=dictionary)
+topics = lda_model.print_topics(num_words=5)
+for topic in topics:
+    print(topic)
 
 
