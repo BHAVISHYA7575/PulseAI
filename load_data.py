@@ -29,3 +29,23 @@ for index, row in data.iterrows():
 print(f"Correct: {correct}")
 print(f"Total: {total}")
 print(f"Accuracy: {correct/total * 100}%")
+
+#DISTRIBUTING THE SENTIMENTS IN THE DATASET
+def get_sentiment_distribution(data):
+  positive_count = 0
+  negative_count = 0
+  neutral_count = 0
+  for index, row in data.iterrows():
+    tweet = row['text']
+    sentiment = bert_analyze_sentiment(tweet)
+    if sentiment == "positive":
+      positive_count += 1
+    elif sentiment == "negative":
+      negative_count += 1
+    else :
+      neutral_count += 1
+  return {"positive": positive_count, "negative": negative_count, "neutral": neutral_count}
+
+if __name__ == "__main__":
+    distribution = get_sentiment_distribution(data)
+    print(distribution)
