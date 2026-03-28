@@ -27,20 +27,28 @@ def load_distribution(_data):
 def load_topics():
     return get_topics()
 
-#FUNCTION CALLING 
-distribution = load_distribution(data)
-topics = load_topics()
+#FUNCTION CALLING WITH SPINNER 
+with st.spinner("Analyzing 1000 tweets...this may takes a few minutes"):
+ distribution = load_distribution(data)
+ topics = load_topics()
 
 #DISPLAYING THE SENTIMENT DISTRIBUTION
+st.divider()
 st.subheader("Sentiment Distribution")
+col1, col2, col3 = st.columns(3)
+col1.metric("Positive", distribution['positive'])
+col2.metric("Negative", distribution['negative'])
+col3.metric("Neutral", distribution['neutral'])
 st.bar_chart(distribution)
 
 #DISPLAYING THE TOPICS
-st.subheader("Topics")
+st.divider()
+st.subheader("Discovered Topics")
 for topic in topics:
     st.write(topic)
 
 #DISPLAYING THE INSIGHTS SUMMARY
+st.divider()
 st.subheader("Insights Summary")
 all_words = []
 for topic in topics:
