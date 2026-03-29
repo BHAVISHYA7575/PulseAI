@@ -1,6 +1,8 @@
 #IMPORTS
-from transformers import pipeline
-summarizer = pipeline("summarization",model="facebook/bart-large-cnn")
+from transformers import pipeline, AutoModelForSeq2SeqLM, AutoTokenizer
+model = AutoModelForSeq2SeqLM.from_pretrained("facebook/bart-large-cnn", local_files_only=True)
+tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn", local_files_only=True)
+summarizer = pipeline("summarization", model=model, tokenizer=tokenizer)
 from topic_modelling import get_topics
 import re
 from load_data import get_sentiment_distribution
@@ -19,15 +21,16 @@ def summarize_insights(text):
  summary = result[0]['summary_text']
  return summary 
 
-topics = get_topics()
-distribution = get_sentiment_distribution(data)
-
-all_words = []
-for topic in topics:
+if __name__ == "__main__":
+ topics = get_topics()
+ distribution = get_sentiment_distribution(data)
+ 
+ all_words = []
+ for topic in topics:
     words = re.findall(r'"(\w+)"', topic[1])
     all_words.extend(words)
 
-insight_text = f"Sentiment distribution: {distribution}. Common topics: {' '.join(all_words)}"
+ insight_text = f"Sentiment distribution: {distribution}. Common topics: {' '.join(all_words)}"
 
-result = summarize_insights(insight_text)
-print(result)
+ result = summarize_insights(insight_text)
+ print(result)
