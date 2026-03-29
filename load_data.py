@@ -5,7 +5,7 @@ from bert_sentiment import bert_analyze_sentiment
 correct = 0 
 total = 0 
 
-df = pd.read_csv("training.1600000.processed.noemoticon.csv", names=['sentiment', 'id', 'date', 'query', 'user', 'text'], encoding = 'latin-1')
+df = pd.read_csv("sample_tweets.csv")
 
 negative = df[df['sentiment'] == 0].head(500)
 positive = df[df['sentiment'] == 4].head(500)

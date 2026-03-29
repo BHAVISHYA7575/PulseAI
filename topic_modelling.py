@@ -8,7 +8,7 @@ from gensim.corpora import Dictionary
 from gensim.models import LdaModel
 
 #DATASET
-df = pd.read_csv("training.1600000.processed.noemoticon.csv", names=['sentiment', 'id', 'date', 'query', 'user', 'text'], encoding = 'latin-1')
+df = pd.read_csv("sample_tweets.csv")
 
 data = df.head(1000)  # getting 1000rows 
 data = data[['text']] # getting only the text column 
